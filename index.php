@@ -107,7 +107,7 @@
                                 <td>{$row['course']}</td>
                                 <td>
                                     <button class='btn btn-warning' onclick='editStudent({$row['id']}, \"{$row['name']}\", \"{$row['email']}\", \"{$row['phone']}\", \"{$row['course']}\")'>Edit</button>
-                                    <button class='btn btn-danger' onclick='confirmDelete({$row['id']})'>Delete</button>
+                                    <button class='btn btn-danger'  onclick='confirmDelete({$row['id']}, \"{$row['name']}\")'>Delete</button>
                                 </td>
                               </tr>";
                     }
@@ -162,13 +162,14 @@
 
 <!-- Custom Alert Box -->
 <div class="alert-box" id="alertBox">
-    <p>Are you sure you want to delete this student?</p>
+    <p id="deleteWarning">Are you sure you want to delete this student?</p>
     <button class="btn btn-danger" id="confirmDeleteBtn">Yes, Delete</button>
     <button class="btn btn-secondary" id="cancelDeleteBtn">Cancel</button>
 </div>
 
 <script>
 let studentIdToDelete = null;
+let studentNameToDelete = null;
 
 function clearForm() {
     document.getElementById('studentId').value = '';
@@ -194,8 +195,10 @@ function submitForm() {
     document.getElementById('registrationForm').submit();
 }
 
-function confirmDelete(id) {
-    studentIdToDelete = id; // Store the ID of the student to delete
+function confirmDelete(id, name) {
+    studentIdToDelete = id;
+    studentNameToDelete = name; 
+    document.getElementById('deleteWarning').innerText = 'Are you sure you want to delete ' + name + '?';
     document.getElementById('alertBox').style.display = 'block'; // Show the alert box
 }
 
